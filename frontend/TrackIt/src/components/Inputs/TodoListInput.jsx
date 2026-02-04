@@ -1,44 +1,44 @@
 import React, { useState } from 'react'
-import { HiMiniPlus,HiOutlineTrash } from "react-icons/hi2"
+import { HiMiniPlus, HiOutlineTrash } from 'react-icons/hi2'
 
-const TodoListInput = ({todoList, setTodoList}) => {
-  const [option, setOption] = useState("");
+const TodoListInput = ({ todoList, setTodoList }) => {
+  const [option, setOption] = useState('')
 
-  const handleAddOption = () =>{
-    if(option.trim()){
-      setTodoList([...todoList,option.trim()]);
-      setOption("");
-    }
-  }
-
-  const handleDeleteOption = (index) =>{
-    const updatedArr = todoList.filter((_,idx)=>idx!==index);
-    setTodoList(updatedArr);
-  }
   return (
-    <div>
-      {todoList.map((item,index)=>(
-        <div key={item}
-        className='flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md mb-3 mt-2'>
-          <p className='text-xs text-black'>
-            <span className='text-xs text-gray-400 font-semibold mr-2'>
-              {index < 9 ? `0${index+1}` : index+1}
-            </span>
-            {item}
+    <div className="space-y-3">
+      {todoList.map((t, i) => (
+        <div
+          key={i}
+          className="flex justify-between items-center bg-slate-800 border border-slate-700 rounded-xl px-3 py-2"
+        >
+          <p className="text-sm text-white">
+            <span className="text-slate-500 mr-2">{String(i + 1).padStart(2, '0')}</span>
+            {t}
           </p>
-          <button className='cursor-pointer'
-          onClick={()=>{
-            handleDeleteOption(index);
-          }}>
-            <HiOutlineTrash className="text-lg text-red-500" />
-          </button>
+          <HiOutlineTrash
+            className="text-rose-400 cursor-pointer"
+            onClick={() => setTodoList(todoList.filter((_, x) => x !== i))}
+          />
         </div>
       ))}
 
-      <div className='flex items-center gap-5 mt-4'>
-        <input type="text" placeholder='Enter Task' value={option} onChange={({target}) => setOption(target.value)} className='w-full text-[13px] text-black outline-none bg-white border border-gray-100 px-3 py-2 rounded-md' />
-        <button className='card-btn text-nowrap' onClick={handleAddOption}>
-          <HiMiniPlus className="text-lg" /> Add
+      <div className="flex gap-3">
+        <input
+          value={option}
+          onChange={e => setOption(e.target.value)}
+          placeholder="New todo"
+          className="flex-1 rounded-xl bg-slate-800 border border-slate-700 px-3 py-2 text-sm text-white"
+        />
+        <button
+          onClick={() => {
+            if (option.trim()) {
+              setTodoList([...todoList, option.trim()])
+              setOption('')
+            }
+          }}
+          className="px-4 py-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20"
+        >
+          <HiMiniPlus />
         </button>
       </div>
     </div>

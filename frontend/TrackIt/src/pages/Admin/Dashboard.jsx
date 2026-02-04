@@ -72,77 +72,79 @@ const Dashboard = () => {
   },[]);
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className='card my-5'>
-        <div>
-          <div className='col-span-3'>
-            <h2 className='text-xl md:text-2xl'>Good Morning! {user?.name}</h2>
-            <p className='text-xs md:text-[13px] text-gray-400 mt-1.5'>{moment().format("dddd Do MMM YYYY")}</p>
-          </div>
+      <div className="my-5">
+        <h2 className="text-2xl font-semibold text-textPrimary">
+          Good Morning, <span className="text-primary">{user?.name}</span> 👋
+        </h2>
+        <p className="text-sm text-textMuted mt-1">
+          {moment().format("dddd, Do MMM YYYY")}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <InfoCard
+          label="Total Tasks"
+          value={addThousandsSeperator(
+            dashboardData?.charts?.taskDistribution?.All || 0
+          )}
+          color="bg-gradient-to-r from-indigo-500 to-violet-600"
+        />
+
+        <InfoCard
+          label="Pending"
+          value={addThousandsSeperator(
+            dashboardData?.charts?.taskDistribution?.Pending || 0
+          )}
+          color="bg-gradient-to-r from-violet-500 to-purple-600"
+        />
+
+        <InfoCard
+          label="In Progress"
+          value={addThousandsSeperator(
+            dashboardData?.charts?.taskDistribution?.InProgress || 0
+          )}
+          color="bg-gradient-to-r from-cyan-500 to-sky-600"
+        />
+
+        <InfoCard
+          label="Completed"
+          value={addThousandsSeperator(
+            dashboardData?.charts?.taskDistribution?.Completed || 0
+          )}
+          color="bg-gradient-to-r from-lime-500 to-green-600"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="card">
+          <h5 className="text-sm font-medium text-textMuted mb-3">
+            Task Distribution
+          </h5>
+          <CustomPieChart data={pieChartData} colors={COLORS} />
         </div>
 
-        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-5'>
-          <InfoCard
-            label="Total Tasks"
-            value = {addThousandsSeperator(
-              dashboardData?.charts?.taskDistribution?.All || 0
-            )}
-            color="bg-primary"
-          />
-          <InfoCard
-            label="Pending Tasks"
-            value = {addThousandsSeperator(
-              dashboardData?.charts?.taskDistribution?.Pending || 0
-            )}
-            color="bg-violet-500"
-          />
-          <InfoCard
-            label="In Progress Tasks"
-            value = {addThousandsSeperator(
-              dashboardData?.charts?.taskDistribution?.InProgress || 0
-            )}
-            color="bg-cyan-500"
-          />
-          <InfoCard
-            label="Completed Tasks"
-            value = {addThousandsSeperator(
-              dashboardData?.charts?.taskDistribution?.Completed || 0
-            )}
-            color="bg-lime-500"
-          />
+        <div className="card">
+          <h5 className="text-sm font-medium text-textMuted mb-3">
+            Task Priority Levels
+          </h5>
+          <CustomBarChart data={barChartData} />
         </div>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6'>
-
-        <div>
-          <div className='card'>
-            <div className='flex items-center justify-between'>
-              <h5 className='font-medium'>Task Distribution</h5>
-            </div>
-            <CustomPieChart data={pieChartData}
-            colors = {COLORS} />
-          </div>
-        </div>
-        <div>
-          <div className='card'>
-            <div className='flex items-center justify-between'>
-              <h5 className='font-medium'>Task Priority Levels</h5>
-            </div>
-            <CustomBarChart data={barChartData} />
-          </div>
+      <div className="card mb-5">
+        <div className="flex items-center justify-between mb-4">
+          <h5 className="text-lg font-semibold text-textPrimary">
+            Recent Tasks
+          </h5>
+          <button
+            onClick={onSeeMore}
+            className="flex items-center gap-1 text-sm text-primary hover:underline"
+          >
+            See All <LuArrowRight />
+          </button>
         </div>
 
-        <div className='md:col-span-2'>
-            <div className='card'>
-              <div className='flex items-center justify-between'>
-                <h5 className='text-lg'>Recent Tasks</h5>
-                <button className='card-btn' onClick={onSeeMore}>
-                  See All <LuArrowRight className='text-base' />
-                </button>
-              </div>
-              <TaskListTable tableData={dashboardData?.recentTasks || []} />
-            </div>
-        </div>
+        <TaskListTable tableData={dashboardData?.recentTasks || []} />
       </div>
     </DashboardLayout>
   )

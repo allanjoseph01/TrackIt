@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   PieChart,
   Pie,
@@ -12,7 +12,7 @@ import CustomLegend from './CustomLegend';
 
 const CustomPieChart = ({ data = [], colors = [] }) => {
   return (
-    <ResponsiveContainer width="100%" height={325}>
+    <ResponsiveContainer width="100%" height={320}>
       <PieChart>
         <Pie
           data={data}
@@ -20,19 +20,25 @@ const CustomPieChart = ({ data = [], colors = [] }) => {
           nameKey="status"
           cx="50%"
           cy="50%"
-          outerRadius={130}
-          innerRadius={100}
+          innerRadius={105}
+          outerRadius={135}
+          paddingAngle={2}
           labelLine={false}
+          isAnimationActive={true}
         >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={colors[index % colors.length] || '#8884d8'} />
+          {data.map((_, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={colors[index % colors.length] || '#6366F1'}
+              className="cursor-pointer"
+            />
           ))}
         </Pie>
         <Tooltip content={<CustomTooltip />} />
         <Legend content={<CustomLegend />} />
       </PieChart>
     </ResponsiveContainer>
-  )
-}
+  );
+};
 
-export default CustomPieChart
+export default CustomPieChart;

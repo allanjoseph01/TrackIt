@@ -1,15 +1,18 @@
 import React from 'react'
 
-const DeleteAlert = ({content,onDelete}) => {
+const DeleteAlert = ({ content, onDelete }) => {
   return (
-    <div>
-      <p className='text-sm'>{content}</p>
-      <div className='flex justify-end mt-6'>
+    <div className="w-full">
+      <p className="text-sm text-slate-300 leading-relaxed">
+        {content}
+      </p>
+
+      <div className="flex justify-end gap-3 mt-6">
         <button
-          type='button'
-          className='flex items-center justify-center gap-1.5 text-xs md:text-sm font-medium text-rose-500 whitespace-nowrap bg-rose-50 border border-rose-100 rounded-lg px-4 py-2 cursor-pointer'
-          onClick={onDelete}>
-            Delete
+          onClick={onDelete}
+          className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 active:scale-95 transition shadow-lg shadow-rose-500/20"
+        >
+          Delete
         </button>
       </div>
     </div>
