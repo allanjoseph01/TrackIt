@@ -12,7 +12,7 @@ import MyTasks from './pages/User/MyTasks';
 import ViewTaskDetails from './pages/User/ViewTaskDetails';
 import UserProvider, { UserContext } from './context/userContext';
 import {Toaster} from 'react-hot-toast';
-// import Index from './pages/Index';
+import Index from './pages/Index';
 
 const App = () => {
   return (
@@ -35,6 +35,7 @@ const App = () => {
               <Route path='/user/task-details/:id' element={<ViewTaskDetails />} />
             </Route>
             <Route path='/' element={<Root />} />
+            <Route path='/home' element={<Index />} />
           </Routes>
         </Router>
       </div>
@@ -57,7 +58,7 @@ const Root = () =>{
   if(loading) return <Outlet />
 
   if(!user){
-    return <Navigate to="/login" />;
+    return <Navigate to="/home" />;
   }
 
   return user.role==="admin" ? <Navigate to="/admin/dashboard" /> : <Navigate to="/user/dashboard" />;
